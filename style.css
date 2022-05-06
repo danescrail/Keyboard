@@ -33,6 +33,36 @@ body {
     background: wheat;
 }
 
+.btn_keyboard_active {
+    width: auto;
+    height: 45px;
+    padding: 0px 20px;
+
+    background: wheat;
+    color: rgb(188, 76, 76);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+.btn_keyboard_inactive {
+    width: auto;
+    height: 45px;
+    padding: 0px 20px;
+
+    background: rgb(44, 41, 41);
+    color: rgb(188, 76, 76);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+
 
 .text {
     width: 780px;
@@ -75,8 +105,27 @@ ul {
     cursor: pointer;
 }
 
+.btn_space_active {
+    width: 195px;
+    height: 45px;
+    padding: 0px 20px;
+
+    background: wheat;
+    color: rgb(188, 76, 76);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+
 .btn_space:active {
     background: wheat;
+}
+
+.btn_textUpper {
+    text-transform: uppercase;
 }
 
 
