@@ -3,7 +3,7 @@ const keyLayoutEng = [
     "Tab", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]", "Delete",
     "CapsLock", "A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'", "Enter1",
     "Shift", "Z", "X", "C", "V", "B", "N", "M", ".", ",", "/", "↑", "Shift1",
-    "Ctrl1", "Win", "Alt", "space", "Alt", "Ctrl", "←", "↓", "→"
+    "Ctrl1", "Win", "Alt", "space", "Alt1", "Ctrl", "←", "↓", "→"
 ];
 
 let body = document.querySelector("body");
@@ -17,32 +17,59 @@ body.appendChild(ul);
 
 
 for (let key of keyLayoutEng) {
+    if (key === "Ctrl") {
+        let button = document.createElement("button");
+        button.classList.add("btn_keyboard");
+        button.innerHTML = key;
+        button.classList.add("CtrlRight");
+        ul.appendChild(button);
+        continue;
+    }
+
     if (key === "Ctrl1") {
         let button = document.createElement("button");
         button.classList.add("btn_keyboard");
         button.style.marginLeft = "7px";
         button.innerHTML = key;
         button.innerHTML = button.innerHTML.slice(0, button.innerHTML.length - 1);
+        button.classList.add("CtrlLeft");
         ul.appendChild(button);
         continue;
     }
-    if (key !== "Backspace1" && key !== "Delete1" && key !== "Enter1" && key !== "Shift1" && key !== "space") {
+
+    if (key !== "Backspace1" && key !== "Delete1" && key !== "Enter1" && key !== "Shift1" && key !== "space" && key !== "Alt1") {
         let button = document.createElement("button");
         button.classList.add("btn_keyboard");
         button.innerHTML = key;
         ul.appendChild(button);
+        if (key === "Shift") {
+            button.classList.add("ShiftLeft");
+        }
+        if (key === "Alt") {
+            button.classList.add("AltLeft");
+        }
     } else if (key !== "space") {
         let button = document.createElement("button");
         button.classList.add("btn_keyboard");
         button.innerHTML = key;
-        button.innerHTML = button.innerHTML.slice(0, button.innerHTML.length - 1);
         ul.appendChild(button);
+        if (key === "Shift1") {
+            button.innerHTML = button.innerHTML.slice(0, button.innerHTML.length - 1);
+            button.classList.add("ShiftRight");
+        } else {
+            button.innerHTML = button.innerHTML.slice(0, button.innerHTML.length - 1);
+        }
+        if (key === "Alt1") {
+            button.classList.add("AtlRight");
+        }
+
     } else if (key === "space") {
         let button = document.createElement("button");
         button.id = "space";
         button.classList.add("btn_space");
         ul.appendChild(button);
     }
+
 
 }
 
@@ -85,9 +112,10 @@ for (let button of keys) {
     });
 }
 
-
 textarea.addEventListener("keydown", function (event) {
     let str = event.key;
+    let Ctrl = event.code;
+    console.log(Ctrl);
 
     if (str !== "Tab" && str !== "Control" && str !== "CapsLock" &&
         str !== "Shift" && str !== "Enter" && str !== "Backspace" &&
@@ -95,21 +123,45 @@ textarea.addEventListener("keydown", function (event) {
         str !== "ArrowRight" && str !== "ArrowLeft" &&
         str !== "ArrowUp" && str !== "ArrowDown" && str !== "Meta") {
         str = str.slice(str.length - 1);
-
     } else {
         str = event.key;
     }
 
     for (let elem of keys) {
-
-        if (elem.innerHTML.toUpperCase() === str.toUpperCase()) {
+        if (elem.classList.contains("AltRight") && Ctrl === "AltRight") {
             elem.classList.remove("btn_keyboard_inactive");
             elem.classList.add("btn_keyboard_active");
         }
 
-        if (elem.innerHTML === "Ctrl" && str === "Control") {
+        if (elem.classList.contains("AltLeft") && Ctrl === "AltLeft") {
             elem.classList.remove("btn_keyboard_inactive");
             elem.classList.add("btn_keyboard_active");
+        }
+
+        if (elem.classList.contains("ShiftLeft") && Ctrl === "ShiftLeft") {
+            elem.classList.remove("btn_keyboard_inactive");
+            elem.classList.add("btn_keyboard_active");
+        }
+
+        if (elem.classList.contains("ShiftRight") && Ctrl === "ShiftRight") {
+            elem.classList.remove("btn_keyboard_inactive");
+            elem.classList.add("btn_keyboard_active");
+        }
+
+        if (elem.innerHTML.toUpperCase() === str.toUpperCase() && elem.innerHTML !== "Shift" && elem.innerHTML !== "Alt") {
+            elem.classList.remove("btn_keyboard_inactive");
+            elem.classList.add("btn_keyboard_active");
+        }
+
+        if (elem.classList.contains("CtrlLeft") && Ctrl === "ControlLeft") {
+            elem.classList.remove("btn_keyboard_inactive");
+            elem.classList.add("btn_keyboard_active");
+        }
+
+        if (elem.classList.contains("CtrlRight") && Ctrl === "ControlRight") {
+            elem.classList.remove("btn_keyboard_inactive");
+            elem.classList.add("btn_keyboard_active");
+
         }
 
         if (str === "ArrowRight" && elem.innerHTML === "→") {
